@@ -21,71 +21,71 @@ On définit ensuite les termes suivant (donnés avec leurs définitions par cont
 - $N_{j, c}$ : le nombre de jours de travail de compétence $c$ que le job $j$ nécessite (pas une variable de décision)
 - $T_{e, c, d, j}$ : variable binaire valant 1 si l’employé $e$ travaille sur la compétence $c$ sur le job $j$ au jour $d$, 0 sinon
 
-- $days\textunderscore worked\_on\_job_{e, j}$ : variable entière quantifiant le nombre de jours de travail de l’employé
+- $days\textunderscore worked\textunderscore on\textunderscore job_{e, j}$ : variable entière quantifiant le nombre de jours de travail de l’employé
   
-    $\forall e, \forall j , \ days\_worked\_on\_job_{e, j} = \Sigma_{c, d} T_{e, c, d, j}$
+    $\forall e, \forall j , \ days\textunderscore worked\textunderscore on\textunderscore job_{e, j} = \Sigma_{c, d} T_{e, c, d, j}$
     
-- $has\_worked_{e, j}$ : variable binaire valant 1 si l’employé $e$ a travaillé sur le job $j$
+- $has\textunderscore worked_{e, j}$ : variable binaire valant 1 si l’employé $e$ a travaillé sur le job $j$
   
-    $\forall e, \forall j , \ has\_worked_{e, j} = min(1, days\_worked\_on\_job_{e, j})$
+    $\forall e, \forall j , \ has\textunderscore worked_{e, j} = min(1, days\textunderscore worked\textunderscore on\textunderscore job_{e, j})$
     
-- $has\_worked\_sum_{e}$ : variable entière quantifiant le nombre de jobs sur lequel l’employé $e$ a travaillé
+- $has\textunderscore worked\textunderscore sum_{e}$ : variable entière quantifiant le nombre de jobs sur lequel l’employé $e$ a travaillé
   
-    $\forall e, has\_worked\_sum_e = \Sigma_j has\_worked_{e,j}$
+    $\forall e, has\textunderscore worked\textunderscore sum_e = \Sigma_j has\textunderscore worked_{e,j}$
     
-- $max\_has\_worked$ : variable entière quantifiant le nombre de jobs maximum sur lequel un employé travaille
+- $max\textunderscore has\textunderscore worked$ : variable entière quantifiant le nombre de jobs maximum sur lequel un employé travaille
   
-    $max\_has\_worked = max_e(has\_worked\_sum_e)$
+    $max\textunderscore has\textunderscore worked = max_e(has\textunderscore worked\textunderscore sum_e)$
     
 - $worked_{j, d}$ : variable binaire valant 1 si du travail a été fourni sur le job $j$ au jour $d$
   
     $\forall j, \forall d, worked_{j, d} = min(1, \Sigma_{e, c} T_{e,c,d,j})$
     
-- $still\_work\_to\_do_{j, d}$ : variable binaire valant 1 si du travail va encore être effectué sur le job $j$ après le jour $d$
+- $still\textunderscore work\textunderscore to\textunderscore do_{j, d}$ : variable binaire valant 1 si du travail va encore être effectué sur le job $j$ après le jour $d$
   
-    $\forall j, still\_work\_to\_do_{j, d} = max_{day>d}(worked_{j,day})$
+    $\forall j, still\textunderscore work\textunderscore to\textunderscore do_{j, d} = max_{day>d}(worked_{j,day})$
     
-- $something\_done\_yet_{j,d}$ : variable binaire valant 1 si du travail a déjà été effectué sur le job $j$ au jour $d$
+- $something\textunderscore done\textunderscore yet_{j,d}$ : variable binaire valant 1 si du travail a déjà été effectué sur le job $j$ au jour $d$
   
-    $\forall j, something\_done\_yet_{j, d} = max_{day\leq d}(worked_{j,day})$
+    $\forall j, something\textunderscore done\textunderscore yet_{j, d} = max_{day\leq d}(worked_{j,day})$
     
-- $end\_dates_j$ : variable entière quantifiant le dernier jour où du travail a été fourni sur le job $j$ (0 si aucun travail n’a été fourni)
+- $end\textunderscore dates_j$ : variable entière quantifiant le dernier jour où du travail a été fourni sur le job $j$ (0 si aucun travail n’a été fourni)
   
-    $\forall j, end\_dates_j = \Sigma_d still\_work\_to\_do_{j, d}$
+    $\forall j, end\textunderscore dates_j = \Sigma_d still\textunderscore work\textunderscore to\textunderscore do_{j, d}$
     
-- $start\_dates_j$ : variable entière quantifiant le premier jour où du travail a été fourni sur le job $j$ ($horizon$ si aucun travail n’a été fourni)
+- $start\textunderscore dates_j$ : variable entière quantifiant le premier jour où du travail a été fourni sur le job $j$ ($horizon$ si aucun travail n’a été fourni)
   
-    $\forall j, start\_dates_j = horizon - \Sigma_d still\_work\_to\_do_{j, d} + 1$
+    $\forall j, start\textunderscore dates_j = horizon - \Sigma_d still\textunderscore work\textunderscore to\textunderscore do_{j, d} + 1$
     
-- $job\_lens_j$ : variable entière quantifiant la durée du job $j$ (négative si aucun travail n’a été effectué)
+- $job\textunderscore lens_j$ : variable entière quantifiant la durée du job $j$ (négative si aucun travail n’a été effectué)
   
-    $\forall j, job\_lens_j = end\_dates_j - start\_dates_j + 1$
+    $\forall j, job\textunderscore lens_j = end\textunderscore dates_j - start\textunderscore dates_j + 1$
     
-- $max\_job\_len$ : variable entière quantifiant la durée maximale des jobs effectués
+- $max\textunderscore job\textunderscore len$ : variable entière quantifiant la durée maximale des jobs effectués
   
-    $max\_job\_len = max_j(job\_lens_j)$
+    $max\textunderscore job\textunderscore len = max_j(job\textunderscore lens_j)$
     
-- $all\_J_{j,c}$ : variable binaire valant 1 si le job $j$ est fini par rapport à la compétence $c$
+- $all\textunderscore J_{j,c}$ : variable binaire valant 1 si le job $j$ est fini par rapport à la compétence $c$
   
-    $\forall j, \forall c, \ M_c * (all\_J_{j,c} - 1) \leq \Sigma_{e,d} T_{e,c,d,j} - N_{j,c} < M_c * all\_J_{j,c}$ avec $M_c$ un majorant de $all\_J_{j,c}$
+    $\forall j, \forall c, \ M_c * (all\textunderscore J_{j,c} - 1) \leq \Sigma_{e,d} T_{e,c,d,j} - N_{j,c} < M_c * all\textunderscore J_{j,c}$ avec $M_c$ un majorant de $all\textunderscore J_{j,c}$
     
-- $all\_J_{j}$ : variable binaire valant 1 si le job $j$ est complètement fini
+- $all\textunderscore J_{j}$ : variable binaire valant 1 si le job $j$ est complètement fini
   
-    $\forall j, all\_J_{j} = min_c(all\_J_{j,c})$
+    $\forall j, all\textunderscore J_{j} = min_c(all\textunderscore J_{j,c})$
     
-- $retard_j$ : variable entière quantifiant le retard sur la livraison du job $j$ par rapport à sa $due\_date$
+- $retard_j$ : variable entière quantifiant le retard sur la livraison du job $j$ par rapport à sa $due\textunderscore date$
   
-    $\forall j, retard_j = max(0, end\_dates_j - due\_date_j)$
+    $\forall j, retard_j = max(0, end\textunderscore dates_j - due\textunderscore date_j)$
     
 - $gains_j$ : variable entière quantifiant le gain rapporté par le job $j$
   
-    $\forall j, gains_j = all\_J_j * (gain_j - daily\_penalty_j * retard_j) - (1-all\_J_j) * daily\_penalty_j * (horizon - due\_date_j)$
+    $\forall j, gains_j = all\textunderscore J_j * (gain_j - daily\textunderscore penalty_j * retard_j) - (1-all\textunderscore J_j) * daily\textunderscore penalty_j * (horizon - due\textunderscore date_j)$
     
     Dans notre modélisation, *CompuOpti* a accepté tous les projets et se prend donc une pénalité pour chaque projet non effectué. Si l’on voulait que la société soit libre de refuser des projets, ils suffirait de supprimer le deuxième terme dans la définition de nos gains.
     
-- $gain\_total$ : variable entière quantifiant le gain total
+- $gain\textunderscore total$ : variable entière quantifiant le gain total
   
-    $gain\_total = \Sigma_j gains_j$
+    $gain\textunderscore total = \Sigma_j gains_j$
     
 
 ### Liste des contraintes
@@ -102,22 +102,22 @@ On définit ensuite les termes suivant (donnés avec leurs définitions par cont
     
 5. On ne travaille pas sur un job déjà fini, et on ne travaille pas sur un job qu’on ne finit pas :
    
-    $\forall j, \ \Sigma_{e,c,d} T_{e,c,d,j} \leq all\_J_j * \Sigma_c N_{j,c}$
+    $\forall j, \ \Sigma_{e,c,d} T_{e,c,d,j} \leq all\textunderscore J_j * \Sigma_c N_{j,c}$
     
 
 ### Liste des critères (fonctions objectifs)
 
 1. En premier lieu, il s’agit de maximiser le résultat financier de l’entreprise et donc de constituer un planning qui conduit à maximiser le bénéfice (incluant d’éventuelles pénalités).
    
-     $maximize(gain\_total)$
+     $maximize(gain\textunderscore total)$
     
 2. On souhaite que les collaborateurs n’aient pas  à changer trop souvent de projet et, pour ce faire on s’attachera à minimiser le nombre de projets sur lesquels un quelconque collaborateur est affecté. 
    
-    $minimize(max\_has\_worked)$
+    $minimize(max\textunderscore has\textunderscore worked)$
     
 3. Il est important que les projets soient réalisés dans un nombre limités de jours consécutifs, ainsi on cherchera pour cela à exécuter le projet le plus long en un minimum de jours.
    
-    $minimize(max\_job\_len)$
+    $minimize(max\textunderscore job\textunderscore len)$
     
 
 ### Calcul de la surface de Pareto
