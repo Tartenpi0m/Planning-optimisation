@@ -21,7 +21,7 @@ On définit ensuite les termes suivant (donnés avec leurs définitions par cont
 - $N_{j, c}$ : le nombre de jours de travail de compétence $c$ que le job $j$ nécessite (pas une variable de décision)
 - $T_{e, c, d, j}$ : variable binaire valant 1 si l’employé $e$ travaille sur la compétence $c$ sur le job $j$ au jour $d$, 0 sinon
 
-- $days\_worked\_on\_job_{e, j}$ : variable entière quantifiant le nombre de jours de travail de l’employé
+- $days\textunderscore worked\_on\_job_{e, j}$ : variable entière quantifiant le nombre de jours de travail de l’employé
   
     $\forall e, \forall j , \ days\_worked\_on\_job_{e, j} = \Sigma_{c, d} T_{e, c, d, j}$
     
